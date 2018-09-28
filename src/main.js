@@ -1,11 +1,10 @@
 const puppeteer = require('puppeteer')
-const EventEmitter = require('events').EventEmitter
-const sendMail = require('./email')
-const event = new EventEmitter()
+// const sendMail = require('./email')
 
 const LIST_CONTAINER = '.opinion-cont'
 const LIVE_ITEM = '.cont-item .item-list'
 var result = []
+
 function main () {
   getLiveContent()
 }
@@ -13,7 +12,7 @@ function main () {
 function getLiveContent () {
   (async () => {
     const browser = await puppeteer.launch({
-      headless: false
+      headless: true
     });
     const page = await browser.newPage();
     await page.goto('https://www.guibi.com/live');
@@ -31,8 +30,13 @@ function getLiveContent () {
           return list
         }, LIST_CONTAINER, LIVE_ITEM)
         if (content.length !== result.length) {
+          let step = content.length - result.length
           result = content
-          let temp = result.join('</br></br>')
+          let arr = []
+          for (let i = 0; i < step; i++) {
+            arr.push(content[i])
+          }
+          let temp = arr.join('</br></br>')
           let mailOptions = {
             from: '"wangyao163" <15665690464@163.com>', // sender address
             to: '740964655@qq.com', // list of receivers
@@ -41,8 +45,8 @@ function getLiveContent () {
             // text: 'Hello world?', // plain text body
             html: temp // html body
           };
-          sendMail(mailOptions)
-          console.log(result)
+          // sendMail(mailOptions)
+          console.log(arr)
         } else {
           console.log('暂无新消息...')
         }
