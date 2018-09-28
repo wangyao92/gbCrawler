@@ -1,25 +1,36 @@
 const nodemailer = require('nodemailer');
+const smtpTransport = require('nodemailer-smtp-transport');
 
-let transporter = nodemailer.createTransport({
-  // host: 'smtp.ethereal.email',
-  service: 'qq', // 使用了内置传输发送邮件 查看支持列表：https://nodemailer.com/smtp/well-known/
+// let transporter = nodemailer.createTransport({
+//   // host: 'smtp.ethereal.email',
+//   service: '163', // 使用了内置传输发送邮件 查看支持列表：https://nodemailer.com/smtp/well-known/
+//   port: 465, // SMTP 端口
+//   secureConnection: true, // 使用了 SSL
+//   auth: {
+//     user: '15665690464@163.com',
+//     // 这里密码不是qq密码，是你设置的smtp授权码
+//     pass: 'wanys000',
+//   }
+// });
+
+var transporter = nodemailer.createTransport(smtpTransport({
+  host: 'smtp.163.com',
   port: 465, // SMTP 端口
   secureConnection: true, // 使用了 SSL
   auth: {
-    user: 'xxxxxx@qq.com',
-    // 这里密码不是qq密码，是你设置的smtp授权码
-    pass: 'xxxxxx',
+    user: '15665690464@163.com',
+    pass: 'wanys000'
   }
-});
+}));
 
-let mailOptions = {
-  from: '"JavaScript之禅" <xxxxx@qq.com>', // sender address
-  to: 'xxxxxxxx@163.com', // list of receivers
-  subject: 'Hello', // Subject line
-  // 发送text或者html格式
-  // text: 'Hello world?', // plain text body
-  html: '<b>Hello world?</b>' // html body
-};
+// let mailOptions = {
+//   from: '"wangyao163" <15665690464@163.com>', // sender address
+//   to: '740964655@qq.com', // list of receivers
+//   subject: '行情警告', // Subject line
+//   // 发送text或者html格式
+//   // text: 'Hello world?', // plain text body
+//   html: '' // html body
+// };
 
 module.exports = function sendMail (mailOptions) {
   // send mail with defined transport object
