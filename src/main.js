@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer')
-// const sendMail = require('./email')
+const sendMail = require('./email')
 
 const LIST_CONTAINER = '.opinion-cont'
 const LIVE_ITEM = '.cont-item .item-list'
@@ -45,13 +45,13 @@ function getLiveContent () {
             // text: 'Hello world?', // plain text body
             html: temp // html body
           };
-          // sendMail(mailOptions)
-          console.log(arr)
+          sendMail(mailOptions)
+          console.log('有新的消息...' + new Date())
         } else {
           console.log('暂无新消息...')
         }
       })()
-    }, 10000)
+    }, 30000)
   })(LIST_CONTAINER, LIVE_ITEM);
 }
 
